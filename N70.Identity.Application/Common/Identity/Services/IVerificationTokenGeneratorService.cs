@@ -6,7 +6,7 @@ namespace N70.Identity.Application.Common.Identity.Services;
 
 public interface IVerificationTokenGeneratorService
 {
-    string GeneratorTokenAsync(VerificationType type, Guid userId);
+    string GenerateToken(VerificationType type, Guid userId);
 
-    (VerificationToken Token, bool IsValid) Decode(string token);
+    (VerificationToken Token, bool IsValid) DecodeToken(string token);
 }

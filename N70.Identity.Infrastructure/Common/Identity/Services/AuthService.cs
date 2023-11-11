@@ -14,4 +14,9 @@ public class AuthService : IAuthService
     {
         throw new NotImplementedException();
     }
+
+    public ValueTask<bool> GrandRoleAsync(Guid userId, string roleType, Guid actionUserId)
+    {
+        throw new NotImplementedException();
+    }
 }

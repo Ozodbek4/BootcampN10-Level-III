@@ -4,5 +4,5 @@ public class VerificationTokenSettings
 {
     public string IdentityVerificationTokenPurpose { get; set; } = default!;
 
-    public int IndentityExpirationTimeInMinutes { get; set; }
+    public int IdentityVerificationExpirationDurationInMinutes { get; set; }
 }
