@@ -11,8 +11,6 @@ public class RoleRepository : EntityRepositoryBase<Role, DbContext>, IRoleReposi
     {
     }
 
-    public IQueryable<Role> Get(Expression<Func<Role, bool>>? predicate = default, bool asNoTracking = default)
-    {
-        throw new NotImplementedException();
-    }
+    public IQueryable<Role?> Get(Expression<Func<Role, bool>>? predicate = default, bool asNoTracking = default) =>
+        base.Get(predicate, asNoTracking);
 }

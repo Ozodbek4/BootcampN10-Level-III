@@ -5,5 +5,5 @@ namespace N70.Identity.Persistence.Repositories.Interfaces;
 
 public interface IRoleRepository
 {
-    IQueryable<Role> Get(Expression<Func<Role, bool>>? predicate = default, bool asNoTracking);
+    IQueryable<Role> Get(Expression<Func<Role, bool>>? predicate = default, bool asNoTracking = false);
 }

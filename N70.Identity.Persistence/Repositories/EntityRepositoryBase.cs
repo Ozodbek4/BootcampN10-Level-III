@@ -6,17 +6,20 @@ namespace N70.Identity.Persistence.Repositories;
 
 public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : class, IEntity where TContext : DbContext
 {
-    protected TContext DbContext => (TContext)_dbContext;
-    private readonly DbContext _dbContext;
+    protected TContext DbContext => _dbContext;
+    private readonly TContext _dbContext;
 
-    protected EntityRepositoryBase(DbContext dbContext)
+    protected EntityRepositoryBase(TContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    protected IQueryable<TEntity?> Get(Expression<Func<TEntity, bool>>? predicate, bool asNoTracking, CancellationToken cancellationToken)
+    protected IQueryable<TEntity?> Get(Expression<Func<TEntity, bool>>? predicate = default, bool asNoTracking = false, CancellationToken cancellationToken = default)
     {
-        var initialQuery = DbContext.Set<TEntity>().Where(predicate!);
+        var initialQuery = DbContext.Set<TEntity>().Where(entity => true);
+
+        if(predicate is not null)
+            initialQuery = initialQuery.Where(predicate);
 
         if (asNoTracking)
             initialQuery.AsNoTracking();
@@ -24,7 +27,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
         return initialQuery;
     }
 
-    protected async ValueTask<TEntity?> GetById(Guid id, bool asNoTracking, CancellationToken cancellationToken)
+    protected async ValueTask<TEntity?> GetByIdAsync(Guid id, bool asNoTracking = false, CancellationToken cancellationToken = default)
     {
         var initialQuery = DbContext.Set<TEntity>().Where(entity => entity.Id == id);
 
@@ -34,7 +37,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
         return  await initialQuery.SingleOrDefaultAsync(cancellationToken);
     }
 
-    protected async ValueTask<IList<TEntity>> GetByIds(IEnumerable<Guid> ids, bool asNoTracking = false, CancellationToken cancellationToken)
+    protected async ValueTask<IList<TEntity>> GetByIdsAsync(IEnumerable<Guid> ids, bool asNoTracking = false, CancellationToken cancellationToken = default)
     {
         var initialQuery = DbContext.Set<TEntity>();
 
@@ -58,7 +61,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
 
     protected async ValueTask<TEntity> UpdateAsnyc(TEntity entity, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        DbContext.Set<TEntity>().Update(entity);
+        DbContext.Update(entity);
 
         if(saveChanges)
             await DbContext.SaveChangesAsync(cancellationToken);
@@ -68,7 +71,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
 
     protected async ValueTask<TEntity> DeleteAsync(TEntity entity, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        DbContext.Set<TEntity>().Remove(entity);
+        DbContext.Remove(entity);
 
         if(saveChanges)
             await DbContext.SaveChangesAsync(cancellationToken);
@@ -80,14 +83,26 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
     {
         var initialQuery = DbContext.Set<TEntity>();
 
-        var tEntity = initialQuery.FirstOrDefault(entity => entity.Id == id) ??
+        var entity = initialQuery.FirstOrDefault(tEntity => tEntity.Id == id) ??
             throw new ArgumentNullException("Entity does not exists");
 
-        initialQuery.Remove(tEntity);
+        initialQuery.Remove(entity);
 
         if (saveChanges)
             await DbContext.SaveChangesAsync(cancellationToken);
 
-        return tEntity;
+        return entity;
+    }
+
+    protected async ValueTask<IList<TEntity>> DeleteByIdsAsync(IEnumerable<Guid> ids, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        var initialQuery = await GetByIdsAsync(ids, saveChanges, cancellationToken);
+
+        DbContext.RemoveRange(initialQuery);
+
+        if (saveChanges)
+            await DbContext.SaveChangesAsync(cancellationToken);
+
+        return initialQuery;
     }
 }

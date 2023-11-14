@@ -16,5 +16,7 @@ public interface IUserRepository
 
     ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken= default);
 
-    ValueTask<User> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<User> DeleteByIdAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default);
+
+    ValueTask<User> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
 }

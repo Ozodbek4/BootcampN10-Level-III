@@ -11,33 +11,24 @@ public class UserRepository : EntityRepositoryBase<User, DbContext>, IUserReposi
     {
     }
 
-    public ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
+    public new IQueryable<User?> Get(Expression<Func<User, bool>> predicate, bool asNoTracking = false, CancellationToken cancellationToken = default) =>
+        base.Get(predicate, asNoTracking, cancellationToken);
 
-    public ValueTask<User> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
+    public new ValueTask<User?> GetByIdAsync(Guid id, bool asNoTracking = false, CancellationToken cancellationToken = default) =>
+        base.GetByIdAsync(id, asNoTracking, cancellationToken);
 
-    public IQueryable<User?> Get(Expression<Func<User, bool>> predicate, bool asNoTracking = false, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
+    public new async ValueTask<IQueryable<User?>> GetAllAsync(bool asNoTracking = false, CancellationToken cancellationToken = default) =>
+        base.Get(asNoTracking: asNoTracking, cancellationToken: cancellationToken);
 
-    public ValueTask<IQueryable<User?>> GetAllAsync(bool asNoTracking = false, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
+    public new ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+        base.CreateAsync(user, saveChanges, cancellationToken);
 
-    public ValueTask<User?> GetByIdAsync(Guid id, bool asNoTracking = false, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
+    public ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+        base.UpdateAsnyc(user, saveChanges, cancellationToken);
+    
+    public new ValueTask<User> DeleteByIdAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+        base.DeleteByIdAsync(id, saveChanges, cancellationToken);
 
-    public ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
+    public new ValueTask<User> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+        base.DeleteAsync(user, saveChanges, cancellationToken);
 }
