@@ -4,7 +4,7 @@ namespace N70.Identity.Application.Common.Identity.Services;
 
 public interface IAccountService
 {
-    ValueTask<bool> VerificationAsync(User user);
+    ValueTask<bool> VerificationAsync(string token, CancellationToken cancellationToken = default);
 
-    ValueTask<User> CreateUserAsync(User user);
+    ValueTask<bool> CreateUserAsync(User user, CancellationToken cancellationToken = default);
 }

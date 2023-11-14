@@ -6,7 +6,7 @@ namespace N70.Identity.Persistence.Repositories.Interfaces;
 
 public interface IUserRepository
 {
-    IQueryable<User?> Get(Expression<Func<User, bool>> predicate, bool asNoTracking = false, CancellationToken cancellationToken = default);
+    IQueryable<User?> Get(Expression<Func<User, bool>>? predicate = default, bool asNoTracking = false, CancellationToken cancellationToken = default);
 
     ValueTask<User?> GetByIdAsync(Guid id, bool asNoTracking = false, CancellationToken cancellationToken = default);
 
