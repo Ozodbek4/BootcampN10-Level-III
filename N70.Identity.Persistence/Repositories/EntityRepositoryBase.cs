@@ -66,7 +66,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
         return entity;
     }
 
-    protected async ValueTask<TEntity> DeleteAsync(TEntity entity, bool saveChanges = true, CancellationToken cancellationToken)
+    protected async ValueTask<TEntity> DeleteAsync(TEntity entity, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         DbContext.Set<TEntity>().Remove(entity);
 
