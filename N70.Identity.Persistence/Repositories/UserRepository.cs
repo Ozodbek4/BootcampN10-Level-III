@@ -17,8 +17,8 @@ public class UserRepository : EntityRepositoryBase<User, DbContext>, IUserReposi
     public new ValueTask<User?> GetByIdAsync(Guid id, bool asNoTracking = false, CancellationToken cancellationToken = default) =>
         base.GetByIdAsync(id, asNoTracking, cancellationToken);
 
-    public new async ValueTask<IQueryable<User?>> GetAllAsync(bool asNoTracking = false, CancellationToken cancellationToken = default) =>
-        base.Get(asNoTracking: asNoTracking, cancellationToken: cancellationToken);
+    public ValueTask<IQueryable<User?>> GetAllAsync(bool asNoTracking = false, CancellationToken cancellationToken = default) =>
+        new ValueTask<IQueryable<User?>>(base.Get(asNoTracking: asNoTracking, cancellationToken: cancellationToken));
 
     public new ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
         base.CreateAsync(user, saveChanges, cancellationToken);
