@@ -10,8 +10,8 @@ namespace N70.Identity.Infrastructure.Common.Identity.Services;
 
 public class VerificationTokenGeneratorService : IVerificationTokenGeneratorService
 {
-    private readonly IDataProtector _protector;
     private readonly VerificationTokenSettings _verificationTokenSettings;
+    private readonly IDataProtector _protector;
 
     public VerificationTokenGeneratorService(
         IOptions<VerificationTokenSettings> verificationTokenSettings,

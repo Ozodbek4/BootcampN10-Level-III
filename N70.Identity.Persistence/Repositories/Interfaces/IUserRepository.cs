@@ -1,4 +1,5 @@
-﻿using N70.Identity.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using N70.Identity.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace N70.Identity.Persistence.Repositories.Interfaces;

@@ -1,11 +1,16 @@
-﻿using N70.Identity.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using N70.Identity.Domain.Entities;
 using N70.Identity.Persistence.Repositories.Interfaces;
 using System.Linq.Expressions;
 
 namespace N70.Identity.Persistence.Repositories;
 
-public class UserRepository : IUserRepository
+public class UserRepository : EntityRepositoryBase<User, DbContext>, IUserRepository
 {
+    public UserRepository(DbContext dbContext) : base(dbContext)
+    {
+    }
+
     public ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();

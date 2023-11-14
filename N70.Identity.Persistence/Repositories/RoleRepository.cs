@@ -1,12 +1,17 @@
-﻿using N70.Identity.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using N70.Identity.Domain.Entities;
 using N70.Identity.Persistence.Repositories.Interfaces;
 using System.Linq.Expressions;
 
 namespace N70.Identity.Persistence.Repositories;
 
-public class RoleRepository : IRoleRepository
+public class RoleRepository : EntityRepositoryBase<Role, DbContext>, IRoleRepository
 {
-    public IQueryable<Role> Get(Expression<Func<Role, bool>> predicate, bool asNoTracking, CancellationToken cancellationToken = default)
+    public RoleRepository(DbContext dbContext) : base(dbContext)
+    {
+    }
+
+    public IQueryable<Role> Get(Expression<Func<Role, bool>>? predicate = default, bool asNoTracking = default)
     {
         throw new NotImplementedException();
     }
