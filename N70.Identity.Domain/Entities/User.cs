@@ -20,5 +20,5 @@ public class User : IEntity
 
     public Guid RoleId { get; set; }
 
-    public ICollection<Role> Role { get; set; } = new List<Role>();
+    public Role Role { get; set; } = new Role();
 }

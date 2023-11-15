@@ -1,4 +1,5 @@
-﻿using N70.Identity.Application.Common.Notifications.Services;
+﻿using Microsoft.Extensions.Options;
+using N70.Identity.Application.Common.Notifications.Services;
 using N70.Identity.Application.Common.Settings;
 using System.Net;
 using System.Net.Mail;
@@ -9,8 +10,8 @@ public class EmailOrchestrationService : IEmailOrchestrationService
 {
     private readonly EmailSenderSettings _emailSenderSettings;
 
-    public EmailOrchestrationService(EmailSenderSettings emailSenderSettings) =>
-        _emailSenderSettings = emailSenderSettings;
+    public EmailOrchestrationService(IOptions<EmailSenderSettings> emailSenderSettings) =>
+        _emailSenderSettings = emailSenderSettings.Value;
 
     public ValueTask<bool> SendMessageAsync(string emailAddress, string message)
     {

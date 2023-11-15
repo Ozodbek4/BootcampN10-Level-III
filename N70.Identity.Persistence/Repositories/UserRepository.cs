@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using N70.Identity.Domain.Entities;
+﻿using N70.Identity.Domain.Entities;
+using N70.Identity.Persistence.DataContext;
 using N70.Identity.Persistence.Repositories.Interfaces;
 using System.Linq.Expressions;
 
 namespace N70.Identity.Persistence.Repositories;
 
-public class UserRepository : EntityRepositoryBase<User, DbContext>, IUserRepository
+public class UserRepository : EntityRepositoryBase<User, AppDbContext>, IUserRepository
 {
-    public UserRepository(DbContext dbContext) : base(dbContext)
+    public UserRepository(AppDbContext dbContext) : base(dbContext)
     {
     }
 
@@ -25,7 +25,7 @@ public class UserRepository : EntityRepositoryBase<User, DbContext>, IUserReposi
 
     public ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
         base.UpdateAsnyc(user, saveChanges, cancellationToken);
-    
+
     public new ValueTask<User> DeleteByIdAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default) =>
         base.DeleteByIdAsync(id, saveChanges, cancellationToken);
 

@@ -6,6 +6,7 @@ public static partial class HostConfigurations
     {
         builder
             .AddHttpContextProvider()
+            .AddMappers()
             .AddPersistence()
             .AddIdentityInfrastructure()
             .AddNotificationInfrastructure()

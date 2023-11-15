@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using N70.Identity.Domain.Entities;
+﻿using N70.Identity.Domain.Entities;
+using N70.Identity.Persistence.DataContext;
 using N70.Identity.Persistence.Repositories.Interfaces;
 using System.Linq.Expressions;
 
 namespace N70.Identity.Persistence.Repositories;
 
-public class RoleRepository : EntityRepositoryBase<Role, DbContext>, IRoleRepository
+public class RoleRepository : EntityRepositoryBase<Role, AppDbContext>, IRoleRepository
 {
-    public RoleRepository(DbContext dbContext) : base(dbContext)
+    public RoleRepository(AppDbContext dbContext) : base(dbContext)
     {
     }
 

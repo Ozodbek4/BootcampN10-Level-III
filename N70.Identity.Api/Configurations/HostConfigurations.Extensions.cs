@@ -6,6 +6,10 @@ using N70.Identity.Application.Common.Notifications.Services;
 using N70.Identity.Application.Common.Settings;
 using N70.Identity.Infrastructure.Common.Identity.Services;
 using N70.Identity.Infrastructure.Common.Notification.Services;
+using N70.Identity.Persistence.DataContext;
+using N70.Identity.Persistence.Repositories;
+using N70.Identity.Persistence.Repositories.Interfaces;
+using System.Reflection;
 using System.Text;
 
 namespace N70.Identity.Api.Configurations;
@@ -21,8 +25,13 @@ public static partial class HostConfigurations
 
     private static WebApplicationBuilder AddPersistence(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<DbContext>(options =>
+        builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        builder.Services
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IRoleRepository, RoleRepository>()
+            .AddScoped<IAccessTokenRepository, AccessTokenRepository>();
 
         return builder;
     }
@@ -71,7 +80,8 @@ public static partial class HostConfigurations
     {
         builder.Services.Configure<EmailSenderSettings>(builder.Configuration.GetSection(nameof(EmailSenderSettings)));
 
-        builder.Services.AddScoped<IEmailOrchestrationService, EmailOrchestrationService>();
+        builder.Services
+            .AddScoped<IEmailOrchestrationService, EmailOrchestrationService>();
 
         return builder;
     }
@@ -84,6 +94,19 @@ public static partial class HostConfigurations
         return builder;
     }
 
+    private static WebApplicationBuilder AddMappers(this WebApplicationBuilder builder)
+    {
+        var assamples = Assembly
+            .GetExecutingAssembly()
+            .GetReferencedAssemblies()
+            .Select(Assembly.Load)
+            .ToList();
+        assamples.Add(Assembly.GetExecutingAssembly());
+
+        builder.Services.AddAutoMapper(assamples);
+
+        return builder;
+    }
     private static WebApplicationBuilder AddExposers(this WebApplicationBuilder builder)
     {
         builder.Services.AddRouting(options => options.LowercaseUrls = true);

@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using N70.Identity.Domain.Entities;
+﻿using N70.Identity.Domain.Entities;
+using N70.Identity.Persistence.DataContext;
 using N70.Identity.Persistence.Repositories.Interfaces;
 
 namespace N70.Identity.Persistence.Repositories;
 
-public class AccessTokenRepository : EntityRepositoryBase<AccessToken, DbContext>, IAccessTokenRepository
+public class AccessTokenRepository : EntityRepositoryBase<AccessToken, AppDbContext>, IAccessTokenRepository
 {
-    public AccessTokenRepository(DbContext context) : base(context)
+    public AccessTokenRepository(AppDbContext context) : base(context)
     {
     }
 

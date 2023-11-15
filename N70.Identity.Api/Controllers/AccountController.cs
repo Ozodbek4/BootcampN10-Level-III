@@ -10,7 +10,16 @@ namespace N70.Identity.Api.Controllers
     {
         private readonly IAccountService _accountService;
 
-        public AccountController(IAccountService accountService) =>
+        public AccountController(IAccountService accountService)
+        {
             _accountService = accountService;
+        }
+
+        [HttpPut("verification/{token}")]
+        public async ValueTask<IActionResult> VerificateAsync([FromRoute] string token)
+        {
+            var result = await _accountService.VerificationAsync(token);
+            return Ok(result);
+        }
     }
 }

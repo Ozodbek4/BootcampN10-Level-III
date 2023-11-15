@@ -1,10 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using N70.Identity.Domain.Entities;
 
 namespace N70.Identity.Persistence.DataContext;
 
 public class AppDbContext : DbContext
 {
+    public DbSet<User> Users => Set<User>();
 
+    public DbSet<Role> Roles => Set<Role>();
+
+    public DbSet<AccessToken> AccessTokens => Set<AccessToken>();
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
