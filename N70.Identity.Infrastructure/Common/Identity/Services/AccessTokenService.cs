@@ -21,6 +21,6 @@ public class AccessTokenService : IAccessTokenService
             saveChanges, 
             cancellationToken);
 
-    public async ValueTask<AccessToken> CreateAsync(AccessToken token, bool saveChanges = true, CancellationToken cancellationToken) =>
+    public async ValueTask<AccessToken> CreateAsync(AccessToken token, bool saveChanges = true, CancellationToken cancellationToken = default) =>
         await _accessTokenRepository.CreateAsync(token, saveChanges, cancellationToken);
 }

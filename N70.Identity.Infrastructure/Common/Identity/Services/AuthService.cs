@@ -50,8 +50,9 @@ public class AuthService : IAuthService
 
     public async ValueTask<string> LoginAsync(LoginDetails loginDetails)
     {
-        var found = await _userService.Get(user => user.EmailAddress == loginDetails.EmailAddress) ??
+        var user = await _userService.Get(user => user.EmailAddress == loginDetails.EmailAddress) ??
             throw new ArgumentNullException("User doesn't exists");
+        var found = user.SingleOrDefault();
 
         if (found is null || _passwordHasherService.ValidatePassword(loginDetails.Password, found.Password))
             throw new AuthenticationException("Pasword is not match");

@@ -5,5 +5,5 @@ namespace N70.Identity.Application.Common.Identity.Services;
 
 public interface IRoleService
 {
-    ValueTask<Role?> GetByTypeAsync(RoleType type, bool asNoTracking = false, CancellationToken cancellationToken = default)
+    ValueTask<Role?> GetByTypeAsync(RoleType type, bool asNoTracking = false, CancellationToken cancellationToken = default);
 }

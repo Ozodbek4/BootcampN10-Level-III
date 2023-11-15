@@ -8,7 +8,7 @@ public class AccessToken : IEntity
 
     public Guid UserId { get; set; }
 
-    public string Value { get; set; }
+    public string Value { get; set; } = default!;
 
     public bool IsRevoked { get; set; }
 
