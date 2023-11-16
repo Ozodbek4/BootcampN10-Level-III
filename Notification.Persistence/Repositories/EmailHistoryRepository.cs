@@ -14,6 +14,6 @@ public class EmailHistoryRepository : EntityRepositoryBase<EmailHistory, Notific
     public IQueryable<EmailHistory> Get(Expression<Func<EmailHistory, bool>>? predicate, bool asNoTracking) =>
         base.Get(predicate, asNoTracking);
 
-    public ValueTask<EmailHistory> CreateAsync(EmailHistory emailHistory, bool saveChanges = true, CancellationToken cancellationToken = default)  =>
-        base.CreateAsnc(emailHistory, saveChanges, cancellationToken);
+    public new ValueTask<EmailHistory> CreateAsync(EmailHistory emailHistory, bool saveChanges = true, CancellationToken cancellationToken = default)  =>
+        base.CreateAsync(emailHistory, saveChanges, cancellationToken);
 }

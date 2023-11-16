@@ -17,8 +17,8 @@ public class EmailTemplateRepository : EntityRepositoryBase<EmailTemplate, Notif
     }
 
     public IQueryable<EmailTemplate> Get(Expression<Func<EmailTemplate, bool>>? predicate, bool asNoTracking) =>
-        Get(predicate, asNoTracking);
+        base.Get(predicate, asNoTracking);
 
-    public ValueTask<EmailTemplate> CreateAsync(EmailTemplate emailTemplate, bool saveChanges = true, CancellationToken cancellationToken = default) =>
-        CreateAsync(emailTemplate, saveChanges, cancellationToken);
+    public new ValueTask<EmailTemplate> CreateAsync(EmailTemplate emailTemplate, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+        base.CreateAsync(emailTemplate, saveChanges, cancellationToken);
 }

@@ -14,6 +14,6 @@ public class SmsTemplateRepository : EntityRepositoryBase<SmsTemplate, Notificat
     public IQueryable<SmsTemplate> Get(Expression<Func<SmsTemplate, bool>>? expression, bool asNoTracking) =>
         Get(expression, asNoTracking);
 
-    public ValueTask<SmsTemplate> CreateAsync(SmsTemplate smsTemplate, bool saveChanges = true, CancellationToken cancellationToken = default) =>
-        base.CreateAsnc(smsTemplate, saveChanges, cancellationToken);
+    public new ValueTask<SmsTemplate> CreateAsync(SmsTemplate smsTemplate, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+        base.CreateAsync(smsTemplate, saveChanges, cancellationToken);
 }

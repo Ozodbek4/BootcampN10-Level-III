@@ -49,7 +49,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
         return await initialQuery.ToListAsync(cancellationToken: cancellationToken);
     }
 
-    protected async ValueTask<TEntity> CreateAsnc(TEntity entity, bool saveChanges = true, CancellationToken cancellationToken = default)
+    protected async ValueTask<TEntity> CreateAsync(TEntity entity, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
         entity.Id = Guid.Empty;
 

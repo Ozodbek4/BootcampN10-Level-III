@@ -14,6 +14,6 @@ public class SmsHistoryRepository : EntityRepositoryBase<SmsHistory, Notificatio
     public IQueryable<SmsHistory> Get(Expression<Func<SmsHistory, bool>>? predicate, bool asNoTracking) =>
         base.Get(predicate, asNoTracking);
 
-    public ValueTask<SmsHistory> CreateAsync(SmsHistory smsHistory, bool saveChanges = false, CancellationToken cancellationToken = default) =>
-        base.CreateAsnc(smsHistory, saveChanges, cancellationToken);
+    public new ValueTask<SmsHistory> CreateAsync(SmsHistory smsHistory, bool saveChanges = false, CancellationToken cancellationToken = default) =>
+        base.CreateAsync(smsHistory, saveChanges, cancellationToken);
 }

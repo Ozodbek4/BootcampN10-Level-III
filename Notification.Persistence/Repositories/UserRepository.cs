@@ -20,8 +20,8 @@ public class UserRepository : EntityRepositoryBase<User, NotificationDbContext>,
     public ValueTask<IList<User>> GetByIdsAsync(IEnumerable<Guid> ids, bool asNoTracking = false) =>
         base.GetByIdsAsync(ids, asNoTracking);
 
-    public new ValueTask<User> CreateAsnc(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
-        base.CreateAsnc(user, saveChanges, cancellationToken);
+    public new ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+        base.CreateAsync(user, saveChanges, cancellationToken);
 
     public new ValueTask<User> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
         base.DeleteAsync(user, saveChanges, cancellationToken);

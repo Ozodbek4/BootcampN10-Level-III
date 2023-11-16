@@ -11,7 +11,7 @@ public interface IUserRepository
 
     ValueTask<IList<User>> GetByIdsAsync(IEnumerable<Guid> ids, bool asNoTracking = false);
 
-    ValueTask<User> CreateAsnc(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
+    ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
 
     ValueTask<User> UpdateAsnc(User user, bool saveChanges = true, CancellationToken cancellationToken = default);
 
