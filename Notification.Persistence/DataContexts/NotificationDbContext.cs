@@ -19,6 +19,8 @@ public class NotificationDbContext : DbContext
     public DbSet<SmsTemplate> SmsTemplates => Set<SmsTemplate>();
 
     public DbSet<SmsHistory> SmsHistories => Set<SmsHistory>();
+    
+    public DbSet<UserSettings> UserSettings => Set<UserSettings>();
 
     public NotificationDbContext(DbContextOptions<NotificationDbContext> options) : base(options)
     {
