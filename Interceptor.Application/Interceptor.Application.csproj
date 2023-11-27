@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Interceptor.Domain\Interceptor.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

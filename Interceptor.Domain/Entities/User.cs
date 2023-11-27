@@ -1,9 +1,9 @@
-﻿namespace Interceptor.Domain.Entities;
+﻿using Interceptor.Domain.Common.Entities;
 
-public class User
+namespace Interceptor.Domain.Entities;
+
+public class User : SoftDeletedEntity, ICreationAuditableEntity, IModificationAuditableEntity, IDeletionAuditableEntity
 {
-    public Guid Id { get; set; }
-
     public string FirstName { get; set; } = default!;
 
     public string LastName { get; set; } = default!;
@@ -13,4 +13,10 @@ public class User
     public string EmailAddress { get; set; } = default!;
 
     public string Password { get; set; } = default!;
+    
+    public Guid CreatedByUserId { get; set; }
+    
+    public Guid? ModifiedByUserId { get; set; }
+    
+    public Guid? DeletedByUserId { get; set; }
 }

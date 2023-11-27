@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Interceptor.Application\Interceptor.Application.csproj" />
+    <ProjectReference Include="..\Interceptor.Persistence\Interceptor.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
