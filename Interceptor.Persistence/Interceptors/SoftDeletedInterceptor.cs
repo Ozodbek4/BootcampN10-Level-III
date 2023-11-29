@@ -16,7 +16,7 @@ public class SoftDeletedInterceptor : SaveChangesInterceptor
                 if (entry.State != EntityState.Deleted)
                     return;
 
-                entry.Property(nameof(ISoftDeletedEntity.DeletedDate)).CurrentValue = DateTime.Now;
+                entry.Property(nameof(ISoftDeletedEntity.DeletedDate)).CurrentValue = DateTime.UtcNow;
                 entry.Property(nameof(ISoftDeletedEntity.IsDeleted)).CurrentValue = true;
                 entry.State = EntityState.Modified;
             }
