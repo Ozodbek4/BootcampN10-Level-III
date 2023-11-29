@@ -14,10 +14,10 @@ public class AuditableInterceptor : SaveChangesInterceptor
         auditableEntry.ForEach(entry =>
         {
             if (entry.State == EntityState.Added)
-                entry.Property(nameof(IAuditableEntity.CreatedDate)).CurrentValue = DateTimeOffset.Now;
+                entry.Property(nameof(IAuditableEntity.CreatedDate)).CurrentValue = DateTime.Now;
 
             if (entry.State == EntityState.Modified)
-                entry.Property(nameof(IAuditableEntity.ModifiedDate)).CurrentValue = DateTimeOffset.Now;
+                entry.Property(nameof(IAuditableEntity.ModifiedDate)).CurrentValue = DateTime.Now;
         });
 
         return base.SavingChangesAsync(eventData, result, cancellationToken);
