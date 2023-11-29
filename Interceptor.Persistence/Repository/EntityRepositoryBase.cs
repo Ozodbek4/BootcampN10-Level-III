@@ -6,7 +6,7 @@ namespace Interceptor.Persistence.Repository;
 
 public class EntityRepositoryBase<TEntity, TContext>(TContext dbContext) where TEntity : class, IEntity where TContext : DbContext
 {
-    private TContext DbContext => dbContext;
+    protected TContext DbContext => dbContext;
 
     protected IQueryable<TEntity> Get(Expression<Func<TEntity, bool>>? predicate = default, bool asNoTracking = false, CancellationToken cancellationToken = default)
     {

@@ -1,22 +1,21 @@
 ﻿using Interceptor.Domain.Common.Entities;
 using Interceptor.Domain.Settings;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
 
 namespace Interceptor.Persistence.Interceptors;
 
-public class ModifiedInterceptor(IOptions<AuditableSettings> setting) : SaveChangesInterceptor
+public class DeletedInterceptor(IOptions<AuditableSettings> setting) : SaveChangesInterceptor
 {
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData,
         InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
-        var modifiedAuditable = eventData.Context!.ChangeTracker.Entries<IModificationAuditableEntity>().ToList();
+        var deletedAuditable = eventData.Context!.ChangeTracker.Entries<IDeletionAuditableEntity>().ToList();
 
-        modifiedAuditable.ForEach(entry =>
+        deletedAuditable.ForEach(entry =>
         {
-            if (entry.State == EntityState.Modified)
-                entry.Property(nameof(IModificationAuditableEntity.ModifiedByUserId)).CurrentValue = setting.Value.ModifiedById;
+            if (entry.State == Microsoft.EntityFrameworkCore.EntityState.Deleted)
+                entry.Property(nameof(IDeletionAuditableEntity.DeletedByUserId)).CurrentValue = setting.Value.DeletedById;
         });
 
         return base.SavingChangesAsync(eventData, result, cancellationToken);
