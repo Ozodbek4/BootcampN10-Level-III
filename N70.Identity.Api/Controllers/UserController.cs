@@ -14,19 +14,23 @@ namespace N70.Identity.Api.Controllers
         private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
 
-        public UserController(IUserService userService) =>
+        public UserController(IUserService userService, IAccountService accountService, IMapper mapper)
+        {
             _userService = userService;
+            _accountService = accountService;
+            _mapper = mapper;
+        }
 
-        [HttpGet("{id:Guid")]
-        public async ValueTask<IActionResult> Get([FromRoute] Guid id) =>
+        [HttpGet]
+        public async ValueTask<IActionResult> Get(Guid id) =>
             Ok(await _userService.GetByIdAsync(id, true, HttpContext.RequestAborted));
 
-        [HttpPatch]
+        [HttpPost]
         public async ValueTask<IActionResult> Create([FromBody] RegisterDetails registerDetails) =>
             Ok(await _accountService.CreateUserAsync(_mapper.Map<User>(registerDetails)));
 
-        [HttpPut("{id:Guid")]
-        public async ValueTask<IActionResult> Update([FromRoute] Guid id, [FromBody] RegisterDetails registerDetails)
+        [HttpPut]
+        public async ValueTask<IActionResult> Update(Guid id, [FromBody] RegisterDetails registerDetails)
         {
             var found = await _userService.GetByIdAsync(id, true);
             var mapUser = _mapper.Map(registerDetails, found)!;
@@ -34,8 +38,8 @@ namespace N70.Identity.Api.Controllers
             return Ok(await _userService.UpdateAsync(mapUser, cancellationToken: HttpContext.RequestAborted));
         }
 
-        [HttpDelete("{id:Guid")]
-        public async ValueTask<IActionResult> Delete([FromRoute] Guid id) =>
+        [HttpDelete]
+        public async ValueTask<IActionResult> Delete(Guid id) =>
             Ok(await _userService.DeleteAsync(id, cancellationToken: HttpContext.RequestAborted));
     }
 }
