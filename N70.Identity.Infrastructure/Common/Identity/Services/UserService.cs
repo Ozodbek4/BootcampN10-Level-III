@@ -24,6 +24,6 @@ public class UserService : IUserService
     public ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
         _userRepository.UpdateAsync(user, saveChanges, cancellationToken);
 
-    public ValueTask<User> DeleteAsync(Guid id, bool saveChanges, CancellationToken cancellationToken = default) =>
+    public ValueTask<User> DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default) =>
         _userRepository.DeleteByIdAsync(id, saveChanges, cancellationToken);
 }
