@@ -14,4 +14,14 @@
     <ProjectReference Include="..\Notification.Api\Notification.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Identities\Services\" />
+    <Folder Include="Mappers\" />
+    <Folder Include="Settings\" />
+    <Folder Include="Validators\" />
+    <Folder Include="Notifications\Brokers\" />
+    <Folder Include="Notifications\Models\" />
+    <Folder Include="Notifications\Services\" />
+  </ItemGroup>
+
 </Project>

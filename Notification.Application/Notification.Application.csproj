@@ -10,4 +10,13 @@
     <ProjectReference Include="..\Notification.Domain\Notification.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Identities\Services\" />
+    <Folder Include="Common\Models\Querying\" />
+    <Folder Include="Common\Notifications\Brokers\" />
+    <Folder Include="Common\Notifications\Models\" />
+    <Folder Include="Common\Notifications\Services\" />
+    <Folder Include="Common\Querying\Extensions\" />
+  </ItemGroup>
+
 </Project>
