@@ -15,7 +15,7 @@ public class NotificationHistoryConfiguration : IEntityTypeConfiguration<Notific
             .ToTable("NotificationHistories")
             .HasDiscriminator(emailTemplate => emailTemplate.Type)
             .HasValue<SmsHistory>(NotificationType.Sms)
-            .HasValue<EmailHistory>(NotificationType.Emial);
+            .HasValue<EmailHistory>(NotificationType.Email);
 
         builder
             .HasOne<NotificationTemplate>()

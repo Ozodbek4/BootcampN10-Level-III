@@ -16,6 +16,6 @@ public class NotificatioinTemplateConfiguration : IEntityTypeConfiguration<Notif
             .ToTable("NotificationTemplates")
             .HasDiscriminator(emailTemplate => emailTemplate.Type)
             .HasValue<SmsTemplate>(NotificationType.Sms)
-            .HasValue<EmailTemplate>(NotificationType.Emial);
+            .HasValue<EmailTemplate>(NotificationType.Email);
     }
 }
