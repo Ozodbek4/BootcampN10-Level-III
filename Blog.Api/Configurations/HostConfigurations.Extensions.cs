@@ -21,9 +21,9 @@ public static partial class HostConfigurations
     private static WebApplicationBuilder AddInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddScoped<IUserService, UserService>()
+            .AddScoped<ICommentService, CommentService>()
             .AddScoped<IBlogService, BlogService>()
-            .AddScoped<ICommentService, CommentService>();
+            .AddScoped<IUserService, UserService>();
 
         return builder;
     }
@@ -38,6 +38,14 @@ public static partial class HostConfigurations
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IBlogRepository, BlogRepository>()
             .AddScoped<ICommentRepsitory, CommentRepository>();
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder AddMapper(this WebApplicationBuilder builder)
+    {
+        builder.Services
+            .AddAutoMapper(Assemblies);
 
         return builder;
     }

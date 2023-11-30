@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Blog.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Blogs : Migration
+    public partial class Bloges : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,7 +25,7 @@ namespace Blog.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Blogs",
+                name: "Bloges",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -61,7 +61,7 @@ namespace Blog.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_Comments_Blogs_BlogId",
                         column: x => x.BlogId,
-                        principalTable: "Blogs",
+                        principalTable: "Bloges",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -85,7 +85,7 @@ namespace Blog.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Blogs_UserId",
-                table: "Blogs",
+                table: "Bloges",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -111,7 +111,7 @@ namespace Blog.Persistence.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Blogs");
+                name: "Bloges");
 
             migrationBuilder.DropTable(
                 name: "Users");
