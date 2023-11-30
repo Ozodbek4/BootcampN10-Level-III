@@ -14,6 +14,10 @@ public abstract class NotificationHistory : IEntity
     public Guid RecieverId { get; set; }
 
     public string Content { get; set; } = default!;
+    
+    public bool IsSuccessful { get; set; }
+
+    public string? ErrorMessage { get; set; }
 
     public NotificationType Type { get; set; }
 

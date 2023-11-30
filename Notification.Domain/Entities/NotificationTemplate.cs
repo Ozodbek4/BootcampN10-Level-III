@@ -11,5 +11,7 @@ public abstract class NotificationTemplate : IEntity
 
     public NotificationType Type { get; set; }
 
+    public NotificationTemplateType TemplateType { get; set; }
+
     public ICollection<NotificationHistory> Histories { get; set; } = new List<NotificationHistory>();
 }

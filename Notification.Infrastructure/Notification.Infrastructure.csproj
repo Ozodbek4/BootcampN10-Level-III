@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Notification.Api\Notification.Api.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Notifications\Services\" />
-  </ItemGroup>
-
 </Project>
