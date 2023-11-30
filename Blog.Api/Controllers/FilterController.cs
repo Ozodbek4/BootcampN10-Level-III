@@ -9,6 +9,6 @@ namespace Blog.Api.Controllers;
 public class FilterController(IFilterService filterService) : ControllerBase
 {
     [HttpGet]
-    public async ValueTask<IActionResult> Get([FromBody] FilterPagination pagination) =>
+    public async ValueTask<IActionResult> Get([FromQuery] FilterPagination pagination) =>
         Ok(await filterService.GetFilter(pagination));
 }

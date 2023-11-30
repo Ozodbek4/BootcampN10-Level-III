@@ -10,8 +10,8 @@ public class FilterService(IBlogRepository blogRepository, IUserRepository userR
 {
     public async ValueTask<IList<User>> GetFilter(FilterPagination filterPagination)
     {
-        var foundBlogs = blogRepository.Get(blog => blog.Comments.Count() > filterPagination.BloggerCount).ToList();
+        var foundBlogs = blogRepository.Get(blog => blog.Comments.Count() >= filterPagination.BlogCount).ToList();
 
-        return await userRepository.Get(user => foundBlogs.Any(blog => blog.Id == user.Id)).ToListAsync();
+        return (await userRepository.GetAllAsync()).Where(user => foundBlogs.Any(blog => blog.UserId.Equals(user.Id))).ToList();
     }
 }

@@ -2,8 +2,6 @@
 
 public class FilterPagination
 {
-    public uint BloggerCount { get; set; } = 0;
-
     public uint BlogCount { get; set; } = 0;
 
     public uint PageSize { get; set; } = 10;
