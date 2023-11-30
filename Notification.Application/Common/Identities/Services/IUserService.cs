@@ -8,5 +8,5 @@ public interface IUserService
 
     ValueTask<User?> GetSystemUserAsync(bool asNoTracking = false);
 
-    ValueTask<User?> GetByIdsAsync(Guid id, bool asNoTracking = false);
+    ValueTask<User?> GetByIdAsync(Guid id, bool asNoTracking = false);
 }
