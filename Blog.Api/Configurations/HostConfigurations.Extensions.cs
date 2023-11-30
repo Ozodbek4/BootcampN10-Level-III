@@ -1,4 +1,6 @@
-﻿using Blog.Application.Services;
+﻿using Blog.Application.Common.Services;
+using Blog.Application.Services;
+using Blog.Infrastructure.Common.Services;
 using Blog.Infrastructure.Services;
 using Blog.Persistence.DataContext;
 using Blog.Persistence.Repositories;
@@ -23,7 +25,8 @@ public static partial class HostConfigurations
         builder.Services
             .AddScoped<ICommentService, CommentService>()
             .AddScoped<IBlogService, BlogService>()
-            .AddScoped<IUserService, UserService>();
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IFilterService, FilterService>();
 
         return builder;
     }
