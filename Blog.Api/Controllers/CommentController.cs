@@ -21,9 +21,13 @@ public class CommentController(ICommentService commentService, IMapper mapper) :
     public async ValueTask<IActionResult> Create([FromBody] CommentDto comment) =>
         Ok(await commentService.CreateAsync(mapper.Map<Comment>(comment), true, HttpContext.RequestAborted));
 
-    [HttpPut]
-    public async ValueTask<IActionResult> Update([FromBody] CommentDto comment) =>
-        Ok(await commentService.UpdateAsync(mapper.Map<Comment>(comment), true, HttpContext.RequestAborted));
+    [HttpPut("{id:guid}")]
+    public async ValueTask<IActionResult> Update([FromRoute] Guid id, [FromBody] CommentDto comment)
+    {
+        var found = await commentService.GetByIdAsync(id, true, HttpContext.RequestAborted);
+
+        return Ok(await commentService.UpdateAsync(mapper.Map(comment, found)!, true, HttpContext.RequestAborted));
+    }
 
     [HttpDelete("{id:guid}")]
     public async ValueTask<IActionResult> DeleteById([FromRoute] Guid id) =>

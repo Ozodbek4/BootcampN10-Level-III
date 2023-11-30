@@ -19,7 +19,7 @@ public class UserRepository : EntityRepositoryBase<User, BlogDbContext>, IUserRe
         base.GetByIdAsync(id, asNoTracking, cancellationToken);
 
     public async ValueTask<IList<User>> GetAllAsync(bool asNoTracking = false) =>
-        await base.Get(asNoTracking: asNoTracking).ToListAsync();
+        await base.Get(asNoTracking: asNoTracking).Include(user => user.Blogs).ToListAsync();
 
     public new ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
         base.CreateAsync(user, saveChanges, cancellationToken);
@@ -30,6 +30,6 @@ public class UserRepository : EntityRepositoryBase<User, BlogDbContext>, IUserRe
     public new ValueTask<User> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
         base.DeleteAsync(user, saveChanges, cancellationToken);
 
-    public ValueTask<User> DeleteByIdAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+    public new ValueTask<User> DeleteByIdAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default) =>
         base.DeleteByIdAsync(id, saveChanges, cancellationToken);
 }

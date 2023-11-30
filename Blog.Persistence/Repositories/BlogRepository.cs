@@ -16,7 +16,7 @@ public class BlogRepository : EntityRepositoryBase<Blogs, BlogDbContext>, IBlogR
         base.Get(predicate, asNoTracking);
 
     public async ValueTask<IList<Blogs>> GetAllAsync(bool asNoTracking = false) =>
-        await base.Get(asNoTracking: asNoTracking).ToListAsync();
+        await base.Get(asNoTracking: asNoTracking).Include(blog => blog.Comments).ToListAsync();
 
     public new ValueTask<Blogs?> GetByIdAsync(Guid id, bool asNoTracking = false, CancellationToken cancellationToken = default) =>
         base.GetByIdAsync(id, asNoTracking, cancellationToken);

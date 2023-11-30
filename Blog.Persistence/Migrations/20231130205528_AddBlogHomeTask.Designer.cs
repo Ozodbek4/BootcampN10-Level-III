@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Blog.Persistence.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20231130180205_Blogs")]
-    partial class Bloges
+    [Migration("20231130205528_AddBlogHomeTask")]
+    partial class AddBlogHomeTask
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Blog.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Blog.Domain.Entities.Bloges", b =>
+            modelBuilder.Entity("Blog.Domain.Entities.Blogs", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace Blog.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bloges");
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("Blog.Domain.Entities.Comment", b =>
@@ -106,10 +106,10 @@ namespace Blog.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Blog.Domain.Entities.Bloges", b =>
+            modelBuilder.Entity("Blog.Domain.Entities.Blogs", b =>
                 {
                     b.HasOne("Blog.Domain.Entities.User", null)
-                        .WithMany("Bloges")
+                        .WithMany("Blogs")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -117,7 +117,7 @@ namespace Blog.Persistence.Migrations
 
             modelBuilder.Entity("Blog.Domain.Entities.Comment", b =>
                 {
-                    b.HasOne("Blog.Domain.Entities.Bloges", null)
+                    b.HasOne("Blog.Domain.Entities.Blogs", null)
                         .WithMany("Comments")
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -136,7 +136,7 @@ namespace Blog.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Blog.Domain.Entities.Bloges", b =>
+            modelBuilder.Entity("Blog.Domain.Entities.Blogs", b =>
                 {
                     b.Navigation("Comments");
                 });
@@ -148,7 +148,7 @@ namespace Blog.Persistence.Migrations
 
             modelBuilder.Entity("Blog.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Bloges");
+                    b.Navigation("Blogs");
                 });
 #pragma warning restore 612, 618
         }

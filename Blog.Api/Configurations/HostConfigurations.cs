@@ -7,6 +7,7 @@ public static partial class HostConfigurations
         builder
             .AddPersistence()
             .AddInfrastructure()
+            .AddMapper()
             .AddExposers()
             .AddDevTools();
 

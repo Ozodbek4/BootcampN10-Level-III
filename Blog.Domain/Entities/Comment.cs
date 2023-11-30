@@ -8,7 +8,7 @@ public class Comment : IEntity
 
     public Guid UserId { get; set; }
 
-    public Guid ParentId { get; set; }
+    public Guid? ParentId { get; set; } = Guid.Empty;
 
     public Guid BlogId { get; set; }
 

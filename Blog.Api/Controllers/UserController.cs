@@ -22,9 +22,13 @@ public class UserController(IUserService userService, IMapper mapper) : Controll
     public async ValueTask<IActionResult> Create([FromBody] UserDto user) =>
         Ok(await userService.CreateAsync(mapper.Map<User>(user), true, HttpContext.RequestAborted));
 
-    [HttpPut]
-    public async ValueTask<IActionResult> Update([FromBody] UserDto user) =>
-        Ok(await userService.UpdateAsync(mapper.Map<User>(user), true, HttpContext.RequestAborted));
+    [HttpPut("{id:guid}")]
+    public async ValueTask<IActionResult> Update([FromRoute] Guid id, [FromBody] UserDto user)
+    {
+        var found = await userService.GetByIdAsync(id, true, HttpContext.RequestAborted);
+
+        return Ok(await userService.UpdateAsync(mapper.Map(user, found)!, true, HttpContext.RequestAborted));
+    }
 
     [HttpDelete("{id:guid}")]
     public async ValueTask<IActionResult> DeleteById([FromRoute] Guid id) =>

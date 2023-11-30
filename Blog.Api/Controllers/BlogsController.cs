@@ -22,8 +22,12 @@ public class BlogsController(IBlogService blogsService, IMapper mapper) : Contro
         Ok(await blogsService.CreateAsync(mapper.Map<Blogs>(blog), true, HttpContext.RequestAborted));
 
     [HttpPut]
-    public async ValueTask<IActionResult> Update([FromBody] BlogsDto blog) =>
-        Ok(await blogsService.UpdateAsync(mapper.Map<Blogs>(blog), true, HttpContext.RequestAborted));
+    public async ValueTask<IActionResult> Update([FromRoute] Guid id, [FromBody] BlogsDto blog)
+    {
+        var found = await blogsService.GetByIdAsync(id, true, HttpContext.RequestAborted);
+
+        return Ok(await blogsService.UpdateAsync(mapper.Map(blog, found)!, true, HttpContext.RequestAborted));
+    }
 
     [HttpDelete("{id:guid}")]
     public async ValueTask<IActionResult> DeleteById([FromRoute] Guid id) =>
