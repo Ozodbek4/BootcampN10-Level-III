@@ -1,4 +1,10 @@
-﻿using System.Reflection;
+﻿using Blog.Application.Services;
+using Blog.Infrastructure.Services;
+using Blog.Persistence.DataContext;
+using Blog.Persistence.Repositories;
+using Blog.Persistence.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Blog.Api.Configurations;
 
@@ -14,6 +20,25 @@ public static partial class HostConfigurations
 
     private static WebApplicationBuilder AddInfrastructure(this WebApplicationBuilder builder)
     {
+        builder.Services
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IBlogService, BlogService>()
+            .AddScoped<ICommentService, CommentService>();
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder AddPersistence(this WebApplicationBuilder builder)
+    {
+        builder.Services
+            .AddDbContext<BlogDbContext>(options => 
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        builder.Services
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IBlogRepository, BlogRepository>()
+            .AddScoped<ICommentRepsitory, CommentRepository>();
+
         return builder;
     }
 
