@@ -40,12 +40,15 @@ public class AuthService : IAuthService
 
     public async ValueTask<bool> RegisterAsync(RegisterDetails registerDetails)
     {
-        var found = await _userService.Get(user => user.EmailAddress == registerDetails.EmailAddress) ??
+        var found = (await _userService.Get(user => user.EmailAddress == registerDetails.EmailAddress, true)).SingleOrDefault();
+        
+        if (found is not null)
             throw new ArgumentOutOfRangeException("User already exists");
+        
 
-        var createdUser = await _userService.CreateAsync(_mapper.Map<User>(registerDetails));
+        ///var createdUser = await _userService.CreateAsync(_mapper.Map<User>(registerDetails));
 
-        return await _accountService.CreateUserAsync(createdUser);
+        return await _accountService.CreateUserAsync(_mapper.Map<User>(registerDetails));
     }
 
     public async ValueTask<string> LoginAsync(LoginDetails loginDetails)
@@ -54,7 +57,7 @@ public class AuthService : IAuthService
             throw new ArgumentNullException("User doesn't exists");
         var found = user.SingleOrDefault();
 
-        if (found is null || _passwordHasherService.ValidatePassword(loginDetails.Password, found.Password))
+        if (found is null || !_passwordHasherService.ValidatePassword(loginDetails.Password, found.Password))
             throw new AuthenticationException("Pasword is not match");
 
         var token = _tokenGeneratorService.GetToken(found);

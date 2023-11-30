@@ -2,6 +2,7 @@
 using N70.Identity.Application.Common.Identity.Services;
 using N70.Identity.Application.Common.Notifications.Services;
 using N70.Identity.Domain.Entities;
+using N70.Identity.Domain.Enums;
 
 namespace N70.Identity.Infrastructure.Common.Identity.Services;
 
@@ -10,19 +11,30 @@ public class AccountService : IAccountService
     private readonly IVerificationTokenGeneratorService _verificationTokenGeneratorService;
     private readonly IEmailOrchestrationService _emailOrchestrationService;
     private readonly IUserService _userService;
+    private readonly IRoleService _roleService;
+    private readonly IPasswordHasherService _passwordHasherService;
 
-    public AccountService(IVerificationTokenGeneratorService verificationTokenGeneratorService, IEmailOrchestrationService emailOrchestrationService, IUserService userService)
+    public AccountService(IPasswordHasherService passwordHasherService, IRoleService roleService, IVerificationTokenGeneratorService verificationTokenGeneratorService, IEmailOrchestrationService emailOrchestrationService, IUserService userService)
     {
         _verificationTokenGeneratorService = verificationTokenGeneratorService;
         _emailOrchestrationService = emailOrchestrationService;
         _userService = userService;
+        _passwordHasherService = passwordHasherService;
+        _roleService = roleService;
     }
 
     public async ValueTask<bool> CreateUserAsync(User user, CancellationToken cancellationToken)
     {
-        var createdUser = await _userService.CreateAsync(user, true, cancellationToken);
+        var role = (await _roleService.GetByTypeAsync(RoleType.Guest))!;
+        
+        user.RoleId = role.Id;
+        user.Role = role;
+        user.Password = _passwordHasherService.PasswordHasher(user.Password);
 
-        var verificaitonToken  = _verificationTokenGeneratorService.GenerateToken(VerificationType.EmailAddressVerificaton,user.Id);
+
+        var createdUser = (await _userService.CreateAsync(user, true, cancellationToken));
+
+        var verificaitonToken  = _verificationTokenGeneratorService.GenerateToken(VerificationType.EmailAddressVerificaton, createdUser.Id);
 
         var verificationEmailResult = await _emailOrchestrationService.SendMessageAsync(user.EmailAddress, $"Siz saytga hush kelibsiz - " +
             $"{verificaitonToken}");

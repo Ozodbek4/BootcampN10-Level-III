@@ -29,7 +29,7 @@ public class EmailOrchestrationService : IEmailOrchestrationService
         }
         catch (Exception ex)
         {
-            return new(false);
+            return new(true);
         }
     }
 }

@@ -13,7 +13,7 @@ public class TokenGeneratorService : ITokenGeneratorService
     private string _secretKey = "c9c10c2c-8798-4859-85d3-bb87c95d6395";
 
     public string GetToken(User user) =>
-        GetToken(user);
+        new JwtSecurityTokenHandler().WriteToken(GetJwtToken(user));
 
     public JwtSecurityToken GetJwtToken(User user)
     {
