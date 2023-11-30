@@ -20,4 +20,4 @@ public class SmsTemplateValidator : AbstractValidator<SmsTemplate>
             .Equal(NotificationType.Sms)
             .WithMessage("Sms template notification type must be Sms");
     }
-}}
+}

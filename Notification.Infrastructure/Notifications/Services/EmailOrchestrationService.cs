@@ -6,13 +6,6 @@ using Notification.Domain.Common.Extentions;
 using Notification.Domain.Entities;
 using Notification.Domain.Enums;
 using Notification.Domain.Extensions;
-using Notifications.Infrastructure.Application.Common.Identity.Services;
-using Notifications.Infrastructure.Application.Common.Notifications.Models;
-using Notifications.Infrastructure.Application.Common.Notifications.Services;
-using Notifications.Infrastructure.Domain.Common.Exceptions;
-using Notifications.Infrastructure.Domain.Entities;
-using Notifications.Infrastructure.Domain.Enums;
-using Notifications.Infrastructure.Domain.Extensions;
 
 namespace Notifications.Infrastructure.Infrastrucutre.Common.Notifications.Services;
 
@@ -53,13 +46,13 @@ public class EmailOrchestrationService : IEmailOrchestrationService
 
             var senderUser = (await _userService
                 .GetByIdAsync(request.SenderUserId!.Value))!;
-            
+
             var receiverUser = (await _userService
                 .GetByIdAsync(request.ReceiverUserId))!;
 
             message.SendEmailAddress = senderUser.EmailAddress;
             message.ReceiverEmailAddress = receiverUser.EmailAddress;
-            
+
             message.Template =
                 await _emailTemplateService.GetByTypeAsync(request.TemplateType, true, cancellationToken) ??
                 throw new InvalidOperationException(
