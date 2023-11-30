@@ -1,9 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Notification.Persistence.Repositories.Interfaces;
 
-namespace Notification.Api.Controllers;
+namespace Notifications.Infrastructure.Api.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class NotificationHistoriesController : ControllerBase
 {
+    [HttpGet("sms")]
+    public async ValueTask<IActionResult> Get([FromServices] IEmailHistoryRepository repo) =>
+        Ok(await repo.Get().ToListAsync());
+
+    [HttpGet("email")]
+    public async ValueTask<IActionResult> Get([FromServices] ISmsHistoryRepository repo) =>
+        Ok(await repo.Get().ToListAsync());
 }

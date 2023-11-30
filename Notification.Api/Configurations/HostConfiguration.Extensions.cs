@@ -16,16 +16,30 @@ namespace Notification.Api.Configurations;
 
 public static partial class HostConfiguration
 {
-    private static WebApplicationBuilder AddValidators(this WebApplicationBuilder builder)
+    private static IList<Assembly> Assemblies;
+    
+    static HostConfiguration()
     {
-        var assamblies = Assembly
+            Assemblies = Assembly
             .GetExecutingAssembly()
             .GetReferencedAssemblies()
             .Select(Assembly.Load).ToList();
 
-        assamblies.Add(Assembly.GetExecutingAssembly());
+        Assemblies.Add(Assembly.GetExecutingAssembly());
+    }
 
-        builder.Services.AddValidatorsFromAssemblies(assamblies);
+    static WebApplicationBuilder AddValidators(this WebApplicationBuilder builder)
+    {
+
+
+        builder.Services.AddValidatorsFromAssemblies(Assemblies);
+
+        return builder;
+    }
+
+    private static WebApplicationBuilder AddMappers(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddAutoMapper(Assemblies);
 
         return builder;
     }
