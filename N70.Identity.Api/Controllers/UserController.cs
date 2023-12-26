@@ -22,7 +22,11 @@ namespace N70.Identity.Api.Controllers
         }
 
         [HttpGet]
-        public async ValueTask<IActionResult> Get(Guid id) =>
+        public async ValueTask<IActionResult> GetAll() =>
+            Ok(await _userService.Get(asNoTracking: true, cancellationToken: HttpContext.RequestAborted));
+
+        [HttpGet("{id:guid}")]
+        public async ValueTask<IActionResult> Get([FromRoute] Guid id) =>
             Ok(await _userService.GetByIdAsync(id, true, HttpContext.RequestAborted));
 
         [HttpPost]

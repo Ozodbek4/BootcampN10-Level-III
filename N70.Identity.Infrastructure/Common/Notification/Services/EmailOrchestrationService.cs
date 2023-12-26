@@ -15,21 +15,22 @@ public class EmailOrchestrationService : IEmailOrchestrationService
 
     public ValueTask<bool> SendMessageAsync(string emailAddress, string message)
     {
-        var mail = new MailMessage(_emailSenderSettings.CredentialAddress, emailAddress);
-        mail.Subject = "Siz muvofiqiyatli ro'yxatdan o'tdingiz";
-        mail.Body = message;
+        var gmail = new MailMessage(_emailSenderSettings.CredentialAddress, emailAddress);
+        gmail.Subject = "Siz muvofiqiyatli ro'yxatdan o'tdingiz";
+        gmail.Body = message;
 
-        var smtpClient = new SmtpClient(_emailSenderSettings.Host, _emailSenderSettings.Port);
-        smtpClient.Credentials = new NetworkCredential(_emailSenderSettings.CredentialAddress, _emailSenderSettings.Password);
+        var smtp = new SmtpClient(_emailSenderSettings.Host, _emailSenderSettings.Port);
+        smtp.Credentials = new NetworkCredential(_emailSenderSettings.CredentialAddress, _emailSenderSettings.Password);
+        smtp.EnableSsl = true;
 
         try
         {
-            smtpClient.Send(mail);
+            smtp.Send(gmail);
             return new(true);
         }
         catch (Exception ex)
         {
-            return new(true);
+            return new(false);
         }
     }
 }
