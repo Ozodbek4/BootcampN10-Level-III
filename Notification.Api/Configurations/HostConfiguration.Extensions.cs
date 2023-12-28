@@ -20,7 +20,7 @@ public static partial class HostConfiguration
     
     static HostConfiguration()
     {
-            Assemblies = Assembly
+        Assemblies = Assembly
             .GetExecutingAssembly()
             .GetReferencedAssemblies()
             .Select(Assembly.Load).ToList();

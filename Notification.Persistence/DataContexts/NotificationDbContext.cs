@@ -15,7 +15,7 @@ public class NotificationDbContext : DbContext
     public DbSet<EmailTemplate> EmailTemplates => Set<EmailTemplate>();
 
     public DbSet<EmailHistory> EmailHistories => Set<EmailHistory>();
-
+        
     public DbSet<SmsTemplate> SmsTemplates => Set<SmsTemplate>();
 
     public DbSet<SmsHistory> SmsHistories => Set<SmsHistory>();
@@ -29,5 +29,7 @@ public class NotificationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(NotificationDbContext).Assembly);
+
+        base.OnModelCreating(modelBuilder);
     }
 }

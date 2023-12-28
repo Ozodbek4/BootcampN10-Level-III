@@ -30,7 +30,27 @@ public class UserService : IUserService
 
     public ValueTask<User?> GetByIdAsync(
         Guid ids,
-        bool asNoTracking = false
+        bool asNoTracking = false,
+        CancellationToken cancellationToken = default
     ) =>
         _userRepository.GetByIdAsync(ids, asNoTracking);
+
+    public ValueTask<IEnumerable<User>> GetAllAsync(bool asNoTracking = false) =>
+        new(_userRepository.Get(asNoTracking: true));
+
+    public ValueTask<User> CreateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default)
+    {
+        user.Id = Guid.NewGuid();
+
+        return _userRepository.CreateAsync(user, saveChanges, cancellationToken);
+    }
+
+    public ValueTask<User> UpdateAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+        _userRepository.UpdateAsnc(user, saveChanges, cancellationToken);
+
+    public ValueTask<User> DeleteByIdAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+        _userRepository.DeleteByIdAsnc(id, saveChanges, cancellationToken);
+
+    public ValueTask<User> DeleteAsync(User user, bool saveChanges = true, CancellationToken cancellationToken = default) =>
+        _userRepository.DeleteAsync(user, saveChanges, cancellationToken);
 }

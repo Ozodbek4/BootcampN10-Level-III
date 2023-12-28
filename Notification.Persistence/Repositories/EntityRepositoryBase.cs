@@ -53,7 +53,7 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
     {
         entity.Id = Guid.Empty;
 
-        await DbContext.Set<TEntity>().AddAsync(entity);
+        await DbContext.Set<TEntity>().AddAsync(entity, cancellationToken: cancellationToken);
 
         if (saveChanges)
             await DbContext.SaveChangesAsync(cancellationToken: cancellationToken);
@@ -83,9 +83,12 @@ public abstract class EntityRepositoryBase<TEntity, TContext> where TEntity : cl
 
     protected async ValueTask<TEntity> DeleteByIdAsnc(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
     {
-        var deleted = await GetByIdAsync(id) ?? throw new InvalidOperationException();
+        var deleted = await GetByIdAsync(id, true, cancellationToken) ?? throw new InvalidOperationException();
 
         DbContext.Remove(deleted);
+
+        if (saveChanges)
+            await DbContext.SaveChangesAsync();
 
         return deleted;
     }
